@@ -5,20 +5,21 @@ const knight = (() => {
   const graph = new Graph(chess.getBoardNum());
 
   function path(start, end) {
-    const stack = [start];
-    const passed = [];
-    let square = start;
-    while (!chess.equals(square, end) || passed.length > 64) {
-      square = stack.push();
-      passed.push(square);
-      const nexts = getNextSquares(square);
+    for (let i = 0; i < 64; i += 1) {
       const edges = [];
-
+      const nexts = getNextSquares(chess.numToSquare(i));
       nexts.forEach((next) => {
-        edges.push(chess.squareToNum(next))
-      })
-
+        edges.push(chess.squareToNum(next));
+      });
+      graph.addEdges(i, ...edges);
     }
+
+    const startNum = chess.squareToNum(start);
+    const endNum = chess.squareToNum(end);
+    const paths = graph.path(startNum, endNum);
+    return paths.map((val) => {
+      return chess.numToSquare(val);
+    });
   }
 
   function getNextSquares(square = []) {
@@ -47,10 +48,10 @@ const knight = (() => {
     return squareNums;
   }
 
-  return { 
+  return {
     getNextSquares,
     path,
-   };
+  };
 })();
 
 export default knight;

@@ -1,16 +1,35 @@
 import Node from './Node.mjs';
 
 class LinkedList {
-  next = null;
+  next = new Node();
+
+  constructor() {
+    this.next = null;
+  }
 
   shift() {
-    let node = this.next;
-    if (node == null) {
-      return null
+    if (this.next == null) {
+      return null;
     }
-    let nextNode = node.next;
-    this.next = nextNode;
-    return node;
+    const firstNode = this.next;
+    this.next = firstNode.next;
+    return firstNode;
+  }
+
+  pop() {
+    let node = this;
+    let prevNode = node;
+    while (node.next != null) {
+      prevNode = node;
+      node = node.next;
+    }
+    prevNode.next = null;
+  }
+
+  prepend(value) {
+    const node = new Node(value);
+    node.next = this.next;
+    this.next = node;
   }
 
   append(value) {
@@ -18,14 +37,7 @@ class LinkedList {
     while (lastNode.next != null) {
       lastNode = lastNode.next;
     }
-    const node = new Node(value);
-    lastNode.next = node;
-  }
-
-  prepend(value) {
-    const node = new Node(value);
-    node.next = this.next;
-    this.next = node;
+    lastNode.next = new Node(value);
   }
 
   size() {
@@ -58,16 +70,6 @@ class LinkedList {
       i++;
     }
     return node.next;
-  }
-
-  pop() {
-    let node = this.next;
-    let prevNode = node;
-    while (node.next != null) {
-      prevNode = node;
-      node = node.next;
-    }
-    prevNode.next = null;
   }
 
   contains(value) {
