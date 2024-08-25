@@ -1,14 +1,19 @@
 class Graph {
-  #list = [];
+  #lists = [];
   constructor(arr) {
     arr.forEach(() => {
-      this.#list.push([]);
+      this.#lists.push([]);
     });
   }
 
-  getList() {
-    return this.#list;
+  getLists() {
+    return this.#lists;
   }
+
+  addEdges(node, ...list) {
+    this.#lists[node].push(...list);
+  }
+  
 }
 
 export default Graph;
