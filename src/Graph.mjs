@@ -1,5 +1,5 @@
 class Graph {
-  #list;
+  #list = [];
   constructor(arr) {
     arr.forEach(() => {
       this.#list.push([]);
